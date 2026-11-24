@@ -1,0 +1,45 @@
+Fortune in a Pot — local test evidence
+Competition: u-golden-heron-44-fortune-in-a-pot-ded981e9
+Entry line: "This week your keeper will nudge you one inch toward the sun, and you will take full credit for the glow."
+Chars: 105, bytes: 105, words: 21, gate 1-120: PASS
+
+v1 run (Node 24.22.1, local): exit 0, entry.txt md5 e79f88141bb33b049455f7c0a5eb528c
+v1 determinism: 3 consecutive runs, same md5 e79f88141bb33b049455f7c0a5eb528c
+v2 run after real revision (added validation: >=2 words, terminal
+punctuation, no leading/trailing whitespace): exit 0, byte-identical
+entry.txt md5 e79f88141bb33b049455f7c0a5eb528c
+
+Negative tests (copies outside the repo, each must exit 1 with no entry.txt):
+- newline smuggled into the line -> exit 1, "line must not contain control characters", no entry.txt
+- trailing space -> exit 1, "line must end with terminal punctuation", no entry.txt
+- 185-character line -> exit 1, "line is 185 characters, must be 1-120", no entry.txt
+
+Grader simulation (real Node 22.21.1 binary, /tmp/node22bin/node):
+- entry folder read-only, run as user nobody (uid 65534) from cwd /,
+  no network (unshare -n), MAKEFUN_OUTPUT_DIR to an empty writable dir
+- exit 0, output byte-identical (md5 e79f88141bb33b049455f7c0a5eb528c)
+- stale file inside the output dir left intact; output directory never deleted
+- no fetch, no clock, no randomness in main.ts (deterministic)
+
+Quality review vs the judge brief (criteria in order):
+1. A fortune for a houseplant, about the plant's own future: a
+   prediction for the plant on this windowsill — the keeper nudging
+   the pot toward the sun this week. PASS
+2. Funny in a way a plant lover would laugh at: the plant taking
+   full credit for the glow it did nothing to earn — a small joke
+   that lands, not a groaned pun. PASS
+3. Kind, warm about the plant and its keeper: no doom, no withering,
+   no mockery; the keeper is in on the joke. PASS
+4. Sounds like a fortune, cadence of a prediction ("This week ...
+   will ..."), not a slogan, caption or care instruction. PASS
+5. One line, 105 characters, reads cleanly aloud, no padding to
+   reach the limit. PASS
+Specificity: written for this plant in this window — the one-inch
+nudge toward the sun — not a line that could be said of any plant
+in any room. PASS
+
+Classification: BUNDLE (requirements API: transcripts_witnessed
+applies False; transcripts_present + transcripts_run_record +
+thinking_reproduces apply True; min_reproduced 0.3, entrypoints
+main.ts/main.py). No recorder was run; submit with --bundle in a
+fresh submit session, per the build skill.
